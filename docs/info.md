@@ -13,7 +13,7 @@ This project is a adder of 2 bits
 
 ## How to test
 
-Add 2 signals in the input and see the answer
+Add 2 signals in the input and see the answer in the output
 
 ## External hardware
 
