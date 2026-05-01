@@ -2,9 +2,7 @@
  * Copyright (c) 2024 Your Name
  * SPDX-License-Identifier: Apache-2.0
  */
-
 `default_nettype none
-
 module tt_um_example (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
@@ -16,12 +14,20 @@ module tt_um_example (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+  // Unused outputs
+  assign uo_out[7:1] = 7'd0;
+  assign uio_out     = 8'd0;
+  assign uio_oe      = 8'd0;
+
+  pwm1 pwm_inst (
+      .clk        (clk),
+      .rst_ni     (rst_n),
+      .ref_bits   (ui_in[1:0]),   // ui_in[0..1] = ref_bits
+      .state_bits (ui_in[3:2]),   // ui_in[2..3] = state_bits
+      .pwm_out    (uo_out[0])     // uo_out[0]   = PWM output
+  );
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{ena, uio_in, ui_in[7:4], 1'b0};
 
 endmodule
