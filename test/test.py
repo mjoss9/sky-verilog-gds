@@ -27,9 +27,13 @@ async def test_project(dut):
     dut.uio_in.value = 0
     await ClockCycles(dut.clk, 20)
 
-    # uo_out[0] is PWM, bits[7:1] must be 0
-    assert (dut.uo_out.value & 0xFE) == 0, "uo_out[7:1] must be 0"
-    assert dut.uio_out.value == 0,         "uio_out must be 0"
-    assert dut.uio_oe.value  == 0,         "uio_oe must be 0"
+    # Convert LogicArray to int before bitwise operations
+    uo_out  = int(dut.uo_out.value)
+    uio_out = int(dut.uio_out.value)
+    uio_oe  = int(dut.uio_oe.value)
 
-    dut._log.info(f"PWM out = {dut.uo_out.value & 1}")
+    assert (uo_out  & 0xFE) == 0, "uo_out[7:1] must be 0"
+    assert uio_out           == 0, "uio_out must be 0"
+    assert uio_oe            == 0, "uio_oe must be 0"
+
+    dut._log.info(f"PWM out = {uo_out & 1}")
