@@ -1,6 +1,6 @@
 # Tiny Tapeout project information
 project:
-  title:        "PWM Generator"
+  title:        "IEEE PWM Generator"
   author:       "Maria Jose Huiza"
   discord:      ""
   description:  "2-bit PWM generator with configurable duty cycle via reference bits"
